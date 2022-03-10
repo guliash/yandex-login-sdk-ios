@@ -172,19 +172,13 @@
 - (void)authorizeWithOpenURL:(NSURL *)url completionHandler:(void (^)(BOOL success))completion
 {
     UIApplication *application = UIApplication.sharedApplication;
-#ifdef __IPHONE_11_0
+#ifdef __IPHONE_10_0
     if (@available(iOS 10_0, *)) {
 #else
     if ([application respondsToSelector:@selector(openURL:options:completionHandler:)]) {
 #endif
         NSDictionary *options = @{ UIApplicationOpenURLOptionUniversalLinksOnly: @NO };
         [application openURL:url options:options completionHandler:completion];
-    }
-    else {
-        BOOL result = [application openURL:url];
-        if (completion != NULL) {
-            completion(result);
-        }
     }
 }
 
